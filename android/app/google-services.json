@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "726069009169",
+    "project_id": "darkor281",
+    "storage_bucket": "darkor281.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726069009169:android:659ef05d474acfd3f58ab0",
+        "android_client_info": {
+          "package_name": "com.dariuszkorybski.cantwait28"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726069009169-m2f8jua3vft32s25amimup0blg0vtqlt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJI3XXmRJwPxzCkq-soSggZ7xLmpU4QFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726069009169-m2f8jua3vft32s25amimup0blg0vtqlt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
