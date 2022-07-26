@@ -20,9 +20,10 @@ class HomeCubit extends Cubit<HomeState> {
       (items) {
         final itemModels = items.docs.map((doc) {
           return ItemModel(
+            id: doc.id,
             title: doc['title'],
             adresURL: doc['image_url'],
-            relaseDate: doc['relase_date'],
+            relaseDate: (doc['relase_date'] as Timestamp).toDate(),
           );
         }).toList();
         emit(HomeState(items: itemModels));
@@ -31,7 +32,7 @@ class HomeCubit extends Cubit<HomeState> {
         (error) {
           emit(const HomeState(loadingErrorOccured: true));
         },
-      );
+      ); 
   }
 
   Future<void> remove({required String documentID}) async {
