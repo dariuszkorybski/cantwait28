@@ -2,45 +2,31 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:cantwait28/models/items_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:cantwait28/respositeories/item_repository.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(const HomeState());
+  HomeCubit(this._itemsRepository) : super(const HomeState());
+
+  final ItemsRepository _itemsRepository;
 
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
-    _streamSubscription = FirebaseFirestore.instance
-        .collection('items')
-        .orderBy('release_date')
-        .snapshots()
-        .listen(
+    _streamSubscription = _itemsRepository.getItemStream().listen(
       (items) {
-        final itemModels = items.docs.map((doc) {
-          return ItemModel(
-            id: doc.id,
-            title: doc['title'],
-            adresURL: doc['image_url'],
-            relaseDate: (doc['relase_date'] as Timestamp).toDate(),
-          );
-        }).toList();
-        emit(HomeState(items: itemModels));
+        emit(HomeState(items: items));
       },
     )..onError(
         (error) {
           emit(const HomeState(loadingErrorOccured: true));
         },
-      ); 
+      );
   }
 
   Future<void> remove({required String documentID}) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('items')
-          .doc(documentID)
-          .delete();
+      await _itemsRepository.delete(id: documentID);
     } catch (error) {
       emit(
         const HomeState(removingErrorOccured: true),

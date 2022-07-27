@@ -1,6 +1,7 @@
 import 'package:cantwait28/features/add/page/add_page.dart';
 import 'package:cantwait28/features/home/cubit/home_cubit.dart';
 import 'package:cantwait28/models/items_model.dart';
+import 'package:cantwait28/respositeories/item_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +40,7 @@ class _HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit()..start(),
+      create: (context) => HomeCubit(ItemsRepository())..start(),
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           final itemModels = state.items;
@@ -106,67 +107,65 @@ class _ListViewItem extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.black12,
         ),
-        child: Column(
-          children: [
-            Container(
-              height: 80,
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    itemModel.adresURL,
-                  ),
-                  fit: BoxFit.cover,
+        child: Column(children: [
+          Container(
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.black12,
+              image: DecorationImage(
+                image: NetworkImage(
+                  itemModel.adresURL,
                 ),
+                fit: BoxFit.cover,
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          itemModel.title,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          itemModel.relaseDate.toString(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white70,
-                  ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
                   margin: const EdgeInsets.all(10),
                   padding: const EdgeInsets.all(10),
                   child: Column(
-                    children: const [
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
                       Text(
-                        '0',
-                        style: TextStyle(
+                        itemModel.title,
+                        style: const TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text('days left'),
+                      const SizedBox(height: 10),
+                      Text(
+                        itemModel.relaseDate.toString(),
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white70,
+                ),
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Text(
+                      itemModel.daysLeft(),
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text('days left'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
