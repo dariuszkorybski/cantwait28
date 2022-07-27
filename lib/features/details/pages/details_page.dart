@@ -1,4 +1,3 @@
-
 import 'package:cantwait28/features/details/cubit/details_cubit.dart';
 import 'package:cantwait28/models/items_model.dart';
 import 'package:cantwait28/respositeories/item_repository.dart';
@@ -20,31 +19,29 @@ class DetailsPage extends StatelessWidget {
         title: const Text('Can\'t Wait 🤩'),
       ),
       body: BlocProvider(
-      create: (context) => DetailsCubit(ItemsRepository())..getItemWithID(id),
-      child: BlocBuilder<DetailsCubit, DetailsState>(
-        builder: (context, state) {
-          final itemModel = state.itemModel;
-          if (itemModel == null) {
-            return  const CircularProgressIndicator();
-          }
-          return ListView(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-            ),
-            children: [
-              _ListViewItem(
-                itemModel: itemModel,
+        create: (context) => DetailsCubit(ItemsRepository())..getItemWithID(id),
+        child: BlocBuilder<DetailsCubit, DetailsState>(
+          builder: (context, state) {
+            final itemModel = state.itemModel;
+            if (itemModel == null) {
+              return const CircularProgressIndicator();
+            }
+            return ListView(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
               ),
-            ],
-          ); 
-        },
+              children: [
+                _ListViewItem(
+                  itemModel: itemModel,
+                ),
+              ],
+            );
+          },
+        ),
       ),
-    ),
     );
   }
 }
-
-
 
 class _ListViewItem extends StatelessWidget {
   const _ListViewItem({
@@ -96,7 +93,7 @@ class _ListViewItem extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        itemModel.relaseDate.toString(),
+                        itemModel.relaseDateFormatted(),
                       ),
                     ],
                   ),
